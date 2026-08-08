@@ -10,6 +10,7 @@ import svenhjol.charmony.core.client.features.hud_item_scaling.HudItemScaling;
 import svenhjol.charmony.core.client.features.test_feature.TestFeature;
 import svenhjol.charmony.core.client.features.tint_background.TintBackground;
 import svenhjol.charmony.core.client.features.wood.Wood;
+import svenhjol.charmony.core.client.features.storage_blocks.StorageBlocks;
 
 public final class ClientInitializer implements ClientModInitializer {
     private static boolean initialized = false;
@@ -32,6 +33,7 @@ public final class ClientInitializer implements ClientModInitializer {
         charmony.addSidedFeature(HudItemScaling.class);
         charmony.addSidedFeature(TintBackground.class);
         charmony.addSidedFeature(Wood.class);
+        charmony.addSidedFeature(StorageBlocks.class);
 
         if (Environment.isDevEnvironment()) {
             charmony.addSidedFeature(TestFeature.class);

@@ -13,6 +13,7 @@ accessible field net/minecraft/world/entity/npc/VillagerTrades WANDERING_TRADER_
 mutable    field net/minecraft/world/item/Item components Lnet/minecraft/core/component/DataComponentMap;
 mutable    field net/minecraft/world/level/block/entity/BlockEntityType validBlocks Ljava/util/Set;
 accessible field net/minecraft/world/entity/ai/attributes/AttributeSupplier instances Ljava/util/Map;
+accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
 mutable    field net/minecraft/world/entity/ai/attributes/AttributeSupplier instances Ljava/util/Map;
 mutable    field net/minecraft/world/entity/npc/VillagerTrades WANDERING_TRADER_TRADES Ljava/util/List;
 accessible field net/minecraft/world/entity/ai/village/poi/PoiTypes TYPE_BY_STATE Ljava/util/Map;

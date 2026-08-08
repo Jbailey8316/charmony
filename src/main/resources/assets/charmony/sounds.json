@@ -1,0 +1,10 @@
+{
+  "gunpowder_dissolve": {
+    "sounds": [{"name": "charmony:dissolve", "volume": 1.0}],
+    "subtitle": "subtitles.charmony.block.gunpowder_block.dissolve"
+  },
+  "sugar_dissolve": {
+    "sounds": [{"name": "charmony:dissolve", "volume": 1.0}],
+    "subtitle": "subtitles.charmony.block.sugar_block.dissolve"
+  }
+}

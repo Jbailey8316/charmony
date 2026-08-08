@@ -31,5 +31,10 @@
   "gui.charmony.settings.settings": "Charmony mod settings",
   "gui.charmony.settings.title": "%s Settings",
   "gui.charmony.settings.true": "True",
-  "key.charmony.settings.openSettings": "Open Charmony settings"
+  "key.charmony.settings.openSettings": "Open Charmony settings",
+  "block.charmony.ender_pearl_block": "Ender Pearl Block",
+  "block.charmony.gunpowder_block": "Gunpowder Block",
+  "block.charmony.sugar_block": "Sugar Block",
+  "subtitles.charmony.block.gunpowder_block.dissolve": "Gunpowder dissolves",
+  "subtitles.charmony.block.sugar_block.dissolve": "Sugar dissolves"
 }
