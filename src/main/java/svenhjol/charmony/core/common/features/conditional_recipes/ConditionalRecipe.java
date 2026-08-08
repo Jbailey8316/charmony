@@ -17,6 +17,10 @@ public class ConditionalRecipe {
     protected int count = 1;
     protected List<String> pattern = new ArrayList<>();
     protected Map<String, String> key;
+    protected List<String> ingredients = new ArrayList<>();
+    protected String ingredient;
+    protected float experience;
+    protected int cookingTime;
 
     public ConditionalRecipe(ResourceLocation id, Predicate<ConditionalRecipe> predicate) {
         this.id = id;
@@ -31,6 +35,37 @@ public class ConditionalRecipe {
 
     public ConditionalRecipe useShapedCrafting() {
         this.type = "minecraft:crafting_shaped";
+        return this;
+    }
+
+    public ConditionalRecipe useShapelessCrafting() {
+        this.type = "minecraft:crafting_shapeless";
+        return this;
+    }
+
+    public ConditionalRecipe useBlasting() {
+        this.type = "minecraft:blasting";
+        return this;
+    }
+
+    public ConditionalRecipe withIngredients(String... values) {
+        this.ingredients.clear();
+        this.ingredients.addAll(Arrays.asList(values));
+        return this;
+    }
+
+    public ConditionalRecipe withIngredient(String value) {
+        this.ingredient = value;
+        return this;
+    }
+
+    public ConditionalRecipe withExperience(float value) {
+        this.experience = value;
+        return this;
+    }
+
+    public ConditionalRecipe withCookingTime(int value) {
+        this.cookingTime = value;
         return this;
     }
 
@@ -68,7 +103,7 @@ public class ConditionalRecipe {
         if (!predicate
             .and(x -> x.count > 0)
             .and(x -> x.result != null)
-            .and(x -> !x.pattern.isEmpty())
+            .and(x -> x.type.equals("minecraft:crafting_shapeless") ? !x.ingredients.isEmpty() : x.type.equals("minecraft:blasting") ? x.ingredient != null : !x.pattern.isEmpty())
             .test(this)) {
             return Optional.empty();
         }
@@ -80,19 +115,22 @@ public class ConditionalRecipe {
             out.addProperty("category", this.category);
         }
 
-        var pattern = new JsonArray();
-        for (var row : this.pattern) {
-            pattern.add(row);
+        if (this.type.equals("minecraft:crafting_shapeless")) {
+            var list = new JsonArray();
+            this.ingredients.forEach(list::add);
+            out.add("ingredients", list);
+        } else if (this.type.equals("minecraft:blasting")) {
+            out.addProperty("ingredient", this.ingredient);
+            out.addProperty("experience", this.experience);
+            out.addProperty("cookingtime", this.cookingTime);
+        } else {
+            var pattern = new JsonArray();
+            for (var row : this.pattern) pattern.add(row);
+            out.add("pattern", pattern);
+            var key = new JsonObject();
+            for (var entry : this.key.entrySet()) key.addProperty(entry.getKey(), entry.getValue());
+            out.add("key", key);
         }
-        out.add("pattern", pattern);
-
-        var key = new JsonObject();
-        for (var entry : this.key.entrySet()) {
-            var k = entry.getKey();
-            var v = entry.getValue();
-            key.addProperty(k, v);
-        }
-        out.add("key", key);
 
         var result = new JsonObject();
         result.addProperty("id", this.result);
