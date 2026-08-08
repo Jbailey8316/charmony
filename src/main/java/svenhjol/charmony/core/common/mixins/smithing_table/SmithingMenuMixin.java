@@ -21,7 +21,7 @@ import svenhjol.charmony.api.events.SmithingTableEvents;
 @Mixin(SmithingMenu.class)
 public abstract class SmithingMenuMixin extends ItemCombinerMenu {
     @Unique
-    private @Nullable Player player;
+    private @Nullable SmithingTableEvents.SmithingTableInstance charmony$instance;
 
     public SmithingMenuMixin(@Nullable MenuType<?> menuType, int i, Inventory inventory, ContainerLevelAccess containerLevelAccess, ItemCombinerMenuSlotDefinition itemCombinerMenuSlotDefinition) {
         super(menuType, i, inventory, containerLevelAccess, itemCombinerMenuSlotDefinition);
@@ -38,17 +38,19 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
         at = @At("TAIL")
     )
     private void hookInit(int syncId, Inventory inventory, ContainerLevelAccess access, CallbackInfo ci) {
-        SmithingTableEvents.create((SmithingMenu) (Object) this, inventory.player, inventory,
+        charmony$instance = SmithingTableEvents.create((SmithingMenu) (Object) this, inventory.player, inventory,
             inputSlots, resultSlots, access);
-        player = inventory.player;
     }
 
     @WrapMethod(
         method = "createResult"
     )
     private void hookCreateResult(Operation<Void> original) {
-        var instance = SmithingTableEvents.instance(player);
-        if (instance == null) return;
+        var instance = charmony$instance;
+        if (instance == null) {
+            original.call();
+            return;
+        }
 
         if (SmithingTableEvents.CALCULATE_OUTPUT.invoke(instance)) {
             return;
@@ -61,7 +63,8 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
         at = @At("RETURN")
     )
     private boolean hookCanMoveIntoInputSlots(boolean original, @Local(argsOnly = true) ItemStack stack) {
-        var instance = SmithingTableEvents.instance(player);
+        var instance = charmony$instance;
+        if (instance == null) return original;
         if (SmithingTableEvents.CAN_PLACE.invoke(instance, 0, stack)
             || SmithingTableEvents.CAN_PLACE.invoke(instance, 1, stack)
             || SmithingTableEvents.CAN_PLACE.invoke(instance, 2, stack)
@@ -73,7 +76,7 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
 
     @Override
     protected boolean mayPickup(Player player, boolean bl) {
-        var instance = SmithingTableEvents.instance(player);
+        var instance = charmony$instance;
         if (instance != null) {
             var result = SmithingTableEvents.CAN_TAKE.invoke(instance, player);
 
@@ -90,7 +93,7 @@ public abstract class SmithingMenuMixin extends ItemCombinerMenu {
         method = "onTake"
     )
     private void hookOnTake(Player player, ItemStack stack, Operation<Void> original) {
-        var instance = SmithingTableEvents.instance(player);
+        var instance = charmony$instance;
         if (instance != null && SmithingTableEvents.ON_TAKE.invoke(instance, player, stack)) {
             return;
         }
