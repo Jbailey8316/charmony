@@ -13,6 +13,7 @@ import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.client.ClientRegistry;
 import svenhjol.charmony.core.common.features.wood.CustomWood;
 import svenhjol.charmony.core.common.features.wood.WoodRegistry;
+import svenhjol.charmony.core.common.features.wood.blocks.entity.CustomTrappedChestBlockEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,22 @@ public class Registers extends Setup<Wood> {
                     ChestMaterials.add(material, ChestType.SINGLE, feature.registryId("entity/chest/" + name + "_normal"));
                     ChestMaterials.add(material, ChestType.LEFT, feature.registryId("entity/chest/" + name + "_normal_left"));
                     ChestMaterials.add(material, ChestType.RIGHT, feature.registryId("entity/chest/" + name + "_normal_right"));
+                }
+            }
+            if (!WoodRegistry.TRAPPED_CHESTS.isEmpty()) {
+            clientRegistry.blockEntityRenderer(WoodRegistry.trappedChestBlockEntity(),
+                CustomChestRenderer<CustomTrappedChestBlockEntity>::new);
+            for (var chest : WoodRegistry.TRAPPED_CHESTS) {
+                var type = chest.get();
+                var material = type.material();
+                var name = material.getSerializedName();
+                var chestFeature = type.feature();
+                ChestMaterials.addTrapped(material, ChestType.SINGLE,
+                    chestFeature.registryId("entity/chest/" + name + "_trapped"));
+                ChestMaterials.addTrapped(material, ChestType.LEFT,
+                    chestFeature.registryId("entity/chest/" + name + "_trapped_left"));
+                ChestMaterials.addTrapped(material, ChestType.RIGHT,
+                    chestFeature.registryId("entity/chest/" + name + "_trapped_right"));
                 }
             }
 

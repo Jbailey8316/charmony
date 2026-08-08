@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import svenhjol.charmony.core.common.features.wood.blocks.entity.CustomChestBlockEntity;
+import svenhjol.charmony.core.common.features.wood.blocks.entity.CustomTrappedChestBlockEntity;
 import svenhjol.charmony.core.base.Registerable;
 import svenhjol.charmony.core.base.SidedFeature;
 import svenhjol.charmony.core.common.CommonRegistry;
@@ -39,7 +40,9 @@ public final class WoodRegistry {
     public static final List<Supplier<Boat>> BOATS = new ArrayList<>();
     public static final List<Supplier<Sign>> SIGNS = new ArrayList<>();
     public static final List<Supplier<Chest>> CHESTS = new ArrayList<>();
+    public static final List<Supplier<TrappedChest>> TRAPPED_CHESTS = new ArrayList<>();
     private static Registerable<BlockEntityType<CustomChestBlockEntity>> CHEST_BLOCK_ENTITY;
+    private static Registerable<BlockEntityType<CustomTrappedChestBlockEntity>> TRAPPED_CHEST_BLOCK_ENTITY;
 
     private WoodRegistry(CommonRegistry commonRegistry) {
         this.commonRegistry = commonRegistry;
@@ -64,6 +67,10 @@ public final class WoodRegistry {
         return new Chest(this, material);
     }
 
+    public TrappedChest trappedChest(WoodMaterial material) {
+        return new TrappedChest(this, material);
+    }
+
     public static BlockEntityType<CustomChestBlockEntity> chestBlockEntity() {
         if (CHEST_BLOCK_ENTITY == null) {
             throw new IllegalStateException("Chest block entity was not initialized");
@@ -71,10 +78,21 @@ public final class WoodRegistry {
         return CHEST_BLOCK_ENTITY.get();
     }
 
+    public static BlockEntityType<CustomTrappedChestBlockEntity> trappedChestBlockEntity() {
+        if (TRAPPED_CHEST_BLOCK_ENTITY == null) {
+            throw new IllegalStateException("Trapped chest block entity was not initialized");
+        }
+        return TRAPPED_CHEST_BLOCK_ENTITY.get();
+    }
+
     private static void initializeChestBlockEntity(CommonRegistry registry) {
         if (CHEST_BLOCK_ENTITY == null) {
             CHEST_BLOCK_ENTITY = registry.blockEntity("chest", () ->
                 (pos, state) -> new CustomChestBlockEntity(CHEST_BLOCK_ENTITY.get(), pos, state));
+        }
+        if (TRAPPED_CHEST_BLOCK_ENTITY == null) {
+            TRAPPED_CHEST_BLOCK_ENTITY = registry.blockEntity("trapped_chest", () ->
+                (pos, state) -> new CustomTrappedChestBlockEntity(TRAPPED_CHEST_BLOCK_ENTITY.get(), pos, state));
         }
     }
 

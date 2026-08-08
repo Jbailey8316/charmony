@@ -18,12 +18,12 @@ import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import svenhjol.charmony.core.common.features.wood.blocks.entity.CustomChestBlockEntity;
 
-public final class CustomChestRenderer implements BlockEntityRenderer<CustomChestBlockEntity, CustomChestRenderState> {
+public final class CustomChestRenderer<T extends CustomChestBlockEntity> implements BlockEntityRenderer<T, CustomChestRenderState> {
     private final MaterialSet materials;
     private final ChestModel singleModel;
     private final ChestModel doubleLeftModel;
     private final ChestModel doubleRightModel;
-    private final ChestRenderer<CustomChestBlockEntity> vanillaStateExtractor;
+    private final ChestRenderer<T> vanillaStateExtractor;
 
     public CustomChestRenderer(BlockEntityRendererProvider.Context context) {
         materials = context.materials();
@@ -39,7 +39,7 @@ public final class CustomChestRenderer implements BlockEntityRenderer<CustomChes
     }
 
     @Override
-    public void extractRenderState(CustomChestBlockEntity blockEntity, CustomChestRenderState state, float partialTick,
+    public void extractRenderState(T blockEntity, CustomChestRenderState state, float partialTick,
                                    net.minecraft.world.phys.Vec3 cameraPosition,
                                    ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         vanillaStateExtractor.extractRenderState(blockEntity, state, partialTick, cameraPosition, breakProgress);
