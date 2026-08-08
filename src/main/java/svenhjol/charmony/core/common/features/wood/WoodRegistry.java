@@ -63,6 +63,14 @@ public final class WoodRegistry {
         return new Barrel(this, material);
     }
 
+    public Bookshelf bookshelf(WoodMaterial material) {
+        return new Bookshelf(this, material);
+    }
+
+    public ChiseledBookshelf chiseledBookshelf(WoodMaterial material) {
+        return new ChiseledBookshelf(this, material);
+    }
+
     public Chest chest(WoodMaterial material) {
         return new Chest(this, material);
     }
