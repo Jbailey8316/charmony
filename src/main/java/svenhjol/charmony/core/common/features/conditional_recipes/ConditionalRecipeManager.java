@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -29,7 +28,7 @@ import java.util.*;
  * - create a new recipe map from the resulting map
  * - use a mixin in RecipeManager#finalizeRecipeLoading to load the new recipe map
  */
-public class ConditionalRecipeManager extends SimpleJsonResourceReloadListener<Recipe<?>> implements IdentifiableResourceReloadListener {
+public class ConditionalRecipeManager extends SimpleJsonResourceReloadListener<Recipe<?>> {
     public static final ResourceLocation ID = Charmony.id("charmony_conditional_recipe_manager");
     protected static final Log LOGGER = new Log(Charmony.ID, "ConditionalRecipeManager");
 
@@ -39,11 +38,6 @@ public class ConditionalRecipeManager extends SimpleJsonResourceReloadListener<R
     public ConditionalRecipeManager(HolderLookup.Provider provider) {
         super(provider, Recipe.CODEC, Registries.RECIPE);
         this.dynamicOps = provider.createSerializationContext(JsonOps.INSTANCE);
-    }
-
-    @Override
-    public ResourceLocation getFabricId() {
-        return ID;
     }
 
     @Override
