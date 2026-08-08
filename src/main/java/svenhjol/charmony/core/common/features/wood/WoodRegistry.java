@@ -172,6 +172,10 @@ public final class WoodRegistry {
         return new Leaves(this, material);
     }
 
+    public Ladder ladder(WoodMaterial material) {
+        return new Ladder(this, material);
+    }
+
     public Log log(WoodMaterial material) {
         return new Log(this, material);
     }
