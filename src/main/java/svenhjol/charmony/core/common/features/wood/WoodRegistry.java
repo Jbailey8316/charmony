@@ -11,6 +11,8 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import svenhjol.charmony.core.common.features.wood.blocks.entity.CustomChestBlockEntity;
 import svenhjol.charmony.core.base.Registerable;
 import svenhjol.charmony.core.base.SidedFeature;
 import svenhjol.charmony.core.common.CommonRegistry;
@@ -36,10 +38,13 @@ public final class WoodRegistry {
 
     public static final List<Supplier<Boat>> BOATS = new ArrayList<>();
     public static final List<Supplier<Sign>> SIGNS = new ArrayList<>();
+    public static final List<Supplier<Chest>> CHESTS = new ArrayList<>();
+    private static Registerable<BlockEntityType<CustomChestBlockEntity>> CHEST_BLOCK_ENTITY;
 
     private WoodRegistry(CommonRegistry commonRegistry) {
         this.commonRegistry = commonRegistry;
         this.feature = commonRegistry.feature();
+        initializeChestBlockEntity(commonRegistry);
     }
 
     public static WoodRegistry forRegistry(CommonRegistry registry) {
@@ -53,6 +58,24 @@ public final class WoodRegistry {
 
     public Barrel barrel(WoodMaterial material) {
         return new Barrel(this, material);
+    }
+
+    public Chest chest(WoodMaterial material) {
+        return new Chest(this, material);
+    }
+
+    public static BlockEntityType<CustomChestBlockEntity> chestBlockEntity() {
+        if (CHEST_BLOCK_ENTITY == null) {
+            throw new IllegalStateException("Chest block entity was not initialized");
+        }
+        return CHEST_BLOCK_ENTITY.get();
+    }
+
+    private static void initializeChestBlockEntity(CommonRegistry registry) {
+        if (CHEST_BLOCK_ENTITY == null) {
+            CHEST_BLOCK_ENTITY = registry.blockEntity("chest", () ->
+                (pos, state) -> new CustomChestBlockEntity(CHEST_BLOCK_ENTITY.get(), pos, state));
+        }
     }
 
     public Boat boat(WoodMaterial material) {

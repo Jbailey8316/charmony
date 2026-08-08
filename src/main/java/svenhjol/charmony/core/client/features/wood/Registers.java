@@ -8,6 +8,7 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.block.state.properties.ChestType;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.client.ClientRegistry;
 import svenhjol.charmony.core.common.features.wood.CustomWood;
@@ -26,6 +27,19 @@ public class Registers extends Setup<Wood> {
         var clientRegistry = ClientRegistry.forFeature(feature());
 
         return () -> {
+            if (!WoodRegistry.CHESTS.isEmpty()) {
+                clientRegistry.blockEntityRenderer(WoodRegistry.chestBlockEntity(), CustomChestRenderer::new);
+                for (var chest : WoodRegistry.CHESTS) {
+                    var type = chest.get();
+                    var material = type.material();
+                    var feature = type.feature();
+                    var name = material.getSerializedName();
+                    ChestMaterials.add(material, ChestType.SINGLE, feature.registryId("entity/chest/" + name + "_normal"));
+                    ChestMaterials.add(material, ChestType.LEFT, feature.registryId("entity/chest/" + name + "_normal_left"));
+                    ChestMaterials.add(material, ChestType.RIGHT, feature.registryId("entity/chest/" + name + "_normal_right"));
+                }
+            }
+
             // Register models for custom boats.
             for (var boat : WoodRegistry.BOATS) {
                 var materialName = boat.get().material().getSerializedName();
