@@ -46,11 +46,6 @@ public class FeatureConfigList extends AbstractSelectionList<FeatureConfigList.E
     }
 
     @Override
-    protected boolean isSelectedItem(int i) {
-        return false;
-    }
-
-    @Override
     protected int contentHeight() {
         return super.contentHeight() + extraScrollHeight + SettingsScreen.CONTENT_BOTTOM_MARGIN;
     }
@@ -155,9 +150,9 @@ public class FeatureConfigList extends AbstractSelectionList<FeatureConfigList.E
         }
 
         @Override
-        public void renderChild(GuiGraphics guiGraphics, int y, int offsetX, int l, int m, int mouseX, int mouseY, float tickDelta) {
+        public void renderChild(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
             var buttonX = FeatureConfigList.this.scrollBarX() - enabledButton.getWidth() - 10;
-            var buttonY = y - 2;
+            var buttonY = this.getY() + 2;
 
             enabledButton.setPosition(buttonX, buttonY);
             enabledButton.render(guiGraphics, mouseX, mouseY, tickDelta);
@@ -313,9 +308,9 @@ public class FeatureConfigList extends AbstractSelectionList<FeatureConfigList.E
         }
 
         @Override
-        public void renderChild(GuiGraphics guiGraphics, int y, int offsetX, int l, int m, int mouseX, int mouseY, float tickDelta) {
+        public void renderChild(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
             var boxX = FeatureConfigList.this.scrollBarX() - inputBox.getWidth() - 10;
-            var boxY = y + (m / 2) - 10;
+            var boxY = this.getY() + 5;
             inputBox.visible = true;
             inputBox.setPosition(boxX, boxY);
             inputBox.renderWidget(guiGraphics, mouseX, mouseY, tickDelta);
@@ -367,12 +362,12 @@ public class FeatureConfigList extends AbstractSelectionList<FeatureConfigList.E
         }
 
         @Override
-        public void renderChild(GuiGraphics guiGraphics, int y, int offsetX, int l, int m, int mouseX, int mouseY, float tickDelta) {
+        public void renderChild(GuiGraphics guiGraphics, int mouseX, int mouseY, float tickDelta) {
             var layout = FeatureConfigList.this.parent.layout();
             var boxX = FeatureConfigList.this.scrollBarX() - getRowWidth() - 4;
-            var boxY = y + (m / 2) + 10;
+            var boxY = this.getY() + 5;
             inputBox.visible = true;
-            inputBox.setHeight(Mth.clamp(layout.getContentHeight() - y, 0, 60)); // Dumb z-index hack
+            inputBox.setHeight(Mth.clamp(layout.getContentHeight() - mouseY, 0, 60)); // Dumb z-index hack
             inputBox.setPosition(boxX, boxY);
             inputBox.render(guiGraphics, mouseX, mouseY, tickDelta);
         }
@@ -449,28 +444,30 @@ public class FeatureConfigList extends AbstractSelectionList<FeatureConfigList.E
             FeatureConfigList.this.extraScrollHeight += height;
         }
 
-        public abstract void renderChild(GuiGraphics guiGraphics, int y, int offsetX, int l, int m, int mouseX, int mouseY, float tickDelta);
+        public abstract void renderChild(GuiGraphics guiGraphics, int x, int y, float tickDelta);
 
         @Override
-        public void render(GuiGraphics guiGraphics, int i, int y, int offsetX, int l, int m, int mouseX, int mouseY, boolean bl, float tickDelta) {
+        public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean bl, float tickDelta) {
+            int x = this.getX();
+            int y = this.getY();
             y += SettingsScreen.CONTENT_TOP_MARGIN;
 
             var font = FeatureConfigList.this.minecraft.font;
             var isDefaultVal = defaultVal.equals(val);
             var label = Component.literal(this.label);
             var labelWidth = font.width(label);
-            var textLeft = offsetX + 5;
+            var textLeft = x + 5;
             var textTop = y + 2;
 
             label = label.withColor(isDefaultVal ? 0xefefef : 0xffff00);
-            guiGraphics.drawString(font, label, offsetX + 5, y + 2, -1);
+            guiGraphics.drawString(font, label, x + 5, y + 2, -1);
 
             if (mouseX >= textLeft && mouseX <= textLeft + labelWidth
                 && mouseY >= textTop && mouseY <= textTop + 6) {
                 guiGraphics.setComponentTooltipForNextFrame(font, tooltip, mouseX, mouseY);
             }
 
-            renderChild(guiGraphics, y, offsetX, l, m, mouseX, mouseY, tickDelta);
+            renderChild(guiGraphics, mouseX, mouseY, tickDelta);
         }
     }
 }

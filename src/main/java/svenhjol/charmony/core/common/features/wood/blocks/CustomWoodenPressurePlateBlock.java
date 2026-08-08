@@ -15,7 +15,7 @@ public class CustomWoodenPressurePlateBlock extends PressurePlateBlock {
     public CustomWoodenPressurePlateBlock(ResourceKey<Block> key, WoodMaterial material) {
         super(material.blockSetType(), material.blockProperties()
             .strength(0.5f)
-            .noCollission()
+            .noCollision()
             .setId(key));
 
         this.material = material;

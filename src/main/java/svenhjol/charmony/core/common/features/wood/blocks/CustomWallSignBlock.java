@@ -21,7 +21,7 @@ public class CustomWallSignBlock extends WallSignBlock {
             .forceSolidOn()
             .ignitedByLava()
             .instrument(NoteBlockInstrument.BASS)
-            .noCollission()
+            .noCollision()
             .overrideLootTable(standingSign.getLootTable())
             .overrideDescription(standingSign.getDescriptionId())
             .strength(1.0f)

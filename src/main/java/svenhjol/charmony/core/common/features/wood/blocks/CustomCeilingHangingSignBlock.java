@@ -13,7 +13,7 @@ public class CustomCeilingHangingSignBlock extends CeilingHangingSignBlock {
 
     public CustomCeilingHangingSignBlock(ResourceKey<Block> key, SidedFeature feature, WoodMaterial material) {
         super(material.woodType(), material.blockProperties()
-            .noCollission()
+            .noCollision()
             .sound(SoundType.HANGING_SIGN)
             .strength(1.0f)
             .setId(key));

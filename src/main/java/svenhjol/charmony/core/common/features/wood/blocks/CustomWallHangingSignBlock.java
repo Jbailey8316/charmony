@@ -16,7 +16,7 @@ public class CustomWallHangingSignBlock extends WallHangingSignBlock {
             .forceSolidOn()
             .ignitedByLava()
             .instrument(NoteBlockInstrument.BASS)
-            .noCollission()
+            .noCollision()
             .overrideLootTable(hangingSign.getLootTable())
             .overrideDescription(hangingSign.getDescriptionId())
             .strength(1.0f)

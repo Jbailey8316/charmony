@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import svenhjol.charmony.core.Charmony;
 import svenhjol.charmony.core.base.Mod;
@@ -78,7 +79,8 @@ public class ModsList extends AbstractSelectionList<ModsList.Entry> {
         }
 
         @Override
-        public void render(GuiGraphics guiGraphics, int i, int y, int offsetX, int l, int m, int mouseX, int mouseY, boolean bl, float tickDelta) {
+        public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean bl, float tickDelta) {
+            int y = this.getY();
             y += SettingsScreen.CONTENT_TOP_MARGIN;
 
             int nameButtonX = ModsList.this.width / 2 - (modNameButton.getWidth() / 2) + 10;
@@ -97,12 +99,15 @@ public class ModsList extends AbstractSelectionList<ModsList.Entry> {
          * We must implement our own behavior here or the scrolling causes erroneous button clicks.
          */
         @Override
-        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        public boolean mouseClicked(MouseButtonEvent event, boolean bl) {
+            var mouseX = event.x();
+            var mouseY = event.y();
+
             if (modNameButton.isMouseOver(mouseX, mouseY)) {
-                modNameButton.mouseClicked(mouseX, mouseY, button);
+                modNameButton.mouseClicked(event, bl);
                 return false;
             }
-            return super.mouseClicked(mouseX, mouseY, button);
+            return super.mouseClicked(event, bl);
         }
 
         private void configure() {

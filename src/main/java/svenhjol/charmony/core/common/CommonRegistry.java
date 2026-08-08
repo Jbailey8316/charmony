@@ -301,7 +301,7 @@ public final class CommonRegistry {
             ServerPlayNetworking.registerGlobalReceiver(type,
                 (payload, context) -> {
                 var player = context.player();
-                var server = player.getServer();
+                var server = context.server();
                 if (server != null) {
                     server.execute(() -> handler.get().accept(player, payload));
                 }

@@ -7,6 +7,7 @@ import net.minecraft.client.gui.components.AbstractSelectionList;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import svenhjol.charmony.core.base.Feature;
@@ -149,25 +150,30 @@ public class FeaturesList extends AbstractSelectionList<FeaturesList.Entry> {
          * We must implement our own behavior here or the scrolling causes erroneous button clicks.
          */
         @Override
-        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        public boolean mouseClicked(MouseButtonEvent event, boolean bl) {
+            var mouseX = event.x();
+            var mouseY = event.y();
+
             if (enableButton.isMouseOver(mouseX, mouseY)) {
-                enableButton.mouseClicked(mouseX, mouseY, button);
+                enableButton.mouseClicked(event, bl);
                 return false;
             }
             if (disableButton.isMouseOver(mouseX, mouseY)) {
-                disableButton.mouseClicked(mouseX, mouseY, button);
+                disableButton.mouseClicked(event, bl);
                 return false;
             }
             if (configureButton.isMouseOver(mouseX, mouseY)) {
-                configureButton.mouseClicked(mouseX, mouseY, button);
+                configureButton.mouseClicked(event, bl);
                 return false;
             }
 
-            return super.mouseClicked(mouseX, mouseY, button);
+            return super.mouseClicked(event, bl);
         }
 
         @Override
-        public void render(GuiGraphics guiGraphics, int i, int y, int offsetX, int l, int m, int mouseX, int mouseY, boolean bl, float tickDelta) {
+        public void renderContent(GuiGraphics guiGraphics, int mouseX, int mouseY, boolean bl, float tickDelta) {
+            int x = this.getX();
+            int y = this.getY();
             y += SettingsScreen.CONTENT_TOP_MARGIN;
 
             int enableX = FeaturesList.this.scrollBarX() - enableButton.getWidth() - 10;
@@ -179,7 +185,7 @@ public class FeaturesList extends AbstractSelectionList<FeaturesList.Entry> {
                 .withColor(feature.enabled() ? 0xffffff : 0x808080); // Mute feature name color if disabled
             var descriptionLines = TextComponentHelper.toComponents(feature.description(), 48);
             var nameWidth = font.width(name);
-            var textLeft = offsetX + 5;
+            var textLeft = x + 5;
             var textTop = y + 2;
 
             // Show that the feature is not using default values.
@@ -203,7 +209,7 @@ public class FeaturesList extends AbstractSelectionList<FeaturesList.Entry> {
                 .withStyle(ChatFormatting.BOLD)
                 .withStyle(feature.enabled() ? ChatFormatting.GOLD : ChatFormatting.GRAY));
 
-            guiGraphics.drawString(font, name, offsetX + 5, y + 2, -1);
+            guiGraphics.drawString(font, name, x + 5, y + 2, -1);
 
             if (mouseX >= textLeft && mouseX <= textLeft + nameWidth
                 && mouseY >= textTop && mouseY <= textTop + 6) {

@@ -15,6 +15,7 @@ import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -50,7 +51,7 @@ public final class ClientRegistry {
         return new ClientRegistry(feature);
     }
 
-    public <BE extends BlockEntity> Registerable<Void> blockEntityRenderer(BlockEntityType<BE> blockEntityType, BlockEntityRendererProvider<BE> provider) {
+    public <E extends BlockEntity, S extends BlockEntityRenderState> Registerable<Void> blockEntityRenderer(BlockEntityType<E> blockEntityType, BlockEntityRendererProvider<E, S> provider) {
         return new Registerable<>(feature, () -> {
             BlockEntityRenderers.register(blockEntityType, provider);
             return null;

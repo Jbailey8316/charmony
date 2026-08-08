@@ -11,7 +11,7 @@ public class CustomStandingSignBlock extends StandingSignBlock {
     public CustomStandingSignBlock(ResourceKey<Block> key, WoodMaterial material) {
         super(material.woodType(), material.blockProperties()
             .strength(1.0f)
-            .noCollission()
+            .noCollision()
             .setId(key));
 
         this.material = material;

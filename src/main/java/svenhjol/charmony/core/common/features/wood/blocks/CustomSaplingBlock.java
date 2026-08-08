@@ -16,7 +16,7 @@ public class CustomSaplingBlock extends SaplingBlock {
 
     public CustomSaplingBlock(ResourceKey<Block> key, WoodMaterial material, TreeGrower treeGrower) {
         super(treeGrower, Properties.of()
-            .noCollission()
+            .noCollision()
             .randomTicks()
             .instabreak()
             .sound(SoundType.GRASS)

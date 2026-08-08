@@ -6,6 +6,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import svenhjol.charmony.core.base.Setup;
 
 public class Handlers extends Setup<ControlPanel> {
@@ -25,7 +26,7 @@ public class Handlers extends Setup<ControlPanel> {
         if (feature().showButtonOnTitleScreen() && parent instanceof TitleScreen) {
             var children = parent.children();
             var accessibilityButton = children.stream()
-                .filter(b -> b instanceof SpriteIconButton s && s.sprite.getPath().equals("icon/accessibility"))
+                .filter(b -> b instanceof SpriteIconButton s && s.sprite.enabled().equals(ResourceLocation.parse("icon/accessibility")))
                 .map(b -> (SpriteIconButton)b)
                 .findFirst()
                 .orElse(null);
