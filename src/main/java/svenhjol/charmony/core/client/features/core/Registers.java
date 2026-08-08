@@ -3,6 +3,7 @@ package svenhjol.charmony.core.client.features.core;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.minecraft.client.Minecraft;
 import svenhjol.charmony.core.base.Setup;
 import svenhjol.charmony.core.client.ClientRegistry;
@@ -18,7 +19,7 @@ public class Registers extends Setup<Core> {
         for (var particle : ClientRegistry.PARTICLES) {
             var type = particle.type();
             var registration = particle.registration();
-            minecraft.particleEngine.register(type, registration);
+            ParticleFactoryRegistry.getInstance().register(type, registration);
         }
     }
 
