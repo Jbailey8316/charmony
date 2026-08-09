@@ -2,16 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "#": [
-      {
-        "item": "minecraft:sand"
-      },
-      {
-        "item": "minecraft:red_sand"
-      }
+      "minecraft:sand",
+      "minecraft:red_sand"
     ],
-    "G": {
-      "item": "charmony:gunpowder_block"
-    }
+    "G": "charmony:gunpowder_block"
   },
   "pattern": [
     "###",

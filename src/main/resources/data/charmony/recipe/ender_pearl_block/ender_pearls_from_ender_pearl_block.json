@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "charmony:ender_pearl_block"
-    }
+    "charmony:ender_pearl_block"
   ],
   "result": {
     "id": "minecraft:ender_pearl",

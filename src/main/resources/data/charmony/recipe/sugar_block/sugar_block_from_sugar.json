@@ -6,9 +6,7 @@
     "XXX"
   ],
   "key": {
-    "X": {
-      "item": "minecraft:sugar"
-    }
+    "X": "minecraft:sugar"
   },
   "result": {
     "id": "charmony:sugar_block"

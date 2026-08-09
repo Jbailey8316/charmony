@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "charmony:gunpowder_block"
-    }
+    "charmony:gunpowder_block"
   ],
   "result": {
     "id": "minecraft:sugar",

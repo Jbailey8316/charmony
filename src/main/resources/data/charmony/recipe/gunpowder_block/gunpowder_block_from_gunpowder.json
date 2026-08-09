@@ -6,9 +6,7 @@
     "XXX"
   ],
   "key": {
-    "X": {
-      "item": "minecraft:gunpowder"
-    }
+    "X": "minecraft:gunpowder"
   },
   "result": {
     "id": "charmony:gunpowder_block"
