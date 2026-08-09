@@ -36,6 +36,7 @@ public final class CustomChestRenderer<T extends CustomChestBlockEntity> impleme
         doubleLeftModel = new ChestModel(context.bakeLayer(ModelLayers.DOUBLE_CHEST_LEFT));
         doubleRightModel = new ChestModel(context.bakeLayer(ModelLayers.DOUBLE_CHEST_RIGHT));
         vanillaStateExtractor = new ChestRenderer<>(context);
+        LOGGER.info("[Charm Q10.3] CustomChestRenderer constructed blockEntityRenderer={}", getClass().getName());
     }
 
     @Override
@@ -52,7 +53,8 @@ public final class CustomChestRenderer<T extends CustomChestBlockEntity> impleme
         if (!diagnosticLogged) {
             diagnosticLogged = true;
             var texture = state.chestMaterial == null ? "<null>" : materialTexture(state.chestMaterial);
-            LOGGER.info("[Charm Q10] CustomChestRenderer invoked type={} materialTexture={} block={}", state.type, texture, blockEntity.getBlockState().getBlock());
+            LOGGER.info("[Charm Q10.3] renderer extract blockEntityType={} type={} materialTexture={} block={}",
+                blockEntity.getType(), state.type, texture, blockEntity.getBlockState().getBlock());
         }
     }
 
@@ -80,8 +82,10 @@ public final class CustomChestRenderer<T extends CustomChestBlockEntity> impleme
         var sprite = materials.get(state.chestMaterial);
         if (!bindingDiagnosticLogged) {
             bindingDiagnosticLogged = true;
-            LOGGER.info("[Charm Q10.2] chest texture binding material={} sprite={} renderType={}",
-                materialTexture(state.chestMaterial), sprite, renderType);
+            LOGGER.info("[Charm Q10.3] renderer submit type={} sprite={} renderType={} model={} material={}",
+                state.type, sprite, renderType, state.type == ChestType.LEFT ? "double_left"
+                    : state.type == ChestType.RIGHT ? "double_right" : "single",
+                materialTexture(state.chestMaterial));
         }
         var model = state.type == ChestType.LEFT ? doubleLeftModel
             : state.type == ChestType.RIGHT ? doubleRightModel : singleModel;

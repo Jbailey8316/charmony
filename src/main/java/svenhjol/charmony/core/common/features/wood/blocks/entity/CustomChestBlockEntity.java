@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import svenhjol.charmony.core.common.features.wood.WoodMaterial;
 import svenhjol.charmony.core.common.features.wood.blocks.CustomChestBlock;
+import svenhjol.charmony.core.common.features.wood.blocks.CustomTrappedChestBlock;
 
 import javax.annotation.Nullable;
 
@@ -17,6 +18,9 @@ public class CustomChestBlockEntity extends ChestBlockEntity {
     @Nullable
     public WoodMaterial getMaterial() {
         if (getBlockState().getBlock() instanceof CustomChestBlock chest) {
+            return chest.getMaterial();
+        }
+        if (getBlockState().getBlock() instanceof CustomTrappedChestBlock chest) {
             return chest.getMaterial();
         }
         return null;
