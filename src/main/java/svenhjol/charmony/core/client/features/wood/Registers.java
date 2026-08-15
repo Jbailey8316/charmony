@@ -29,7 +29,6 @@ public class Registers extends Setup<Wood> {
 
         return () -> {
             if (!WoodRegistry.CHESTS.isEmpty()) {
-                feature().log().dev("[Q10] registering custom chest renderer for type {}", WoodRegistry.chestBlockEntity());
                 clientRegistry.blockEntityRenderer(WoodRegistry.chestBlockEntity(), CustomChestRenderer::new);
                 for (var chest : WoodRegistry.CHESTS) {
                     var type = chest.get();
@@ -42,7 +41,6 @@ public class Registers extends Setup<Wood> {
                 }
             }
             if (!WoodRegistry.TRAPPED_CHESTS.isEmpty()) {
-            feature().log().dev("[Q10] registering custom trapped-chest renderer for type {}", WoodRegistry.trappedChestBlockEntity());
             clientRegistry.blockEntityRenderer(WoodRegistry.trappedChestBlockEntity(),
                 CustomChestRenderer<CustomTrappedChestBlockEntity>::new);
             for (var chest : WoodRegistry.TRAPPED_CHESTS) {
@@ -57,11 +55,6 @@ public class Registers extends Setup<Wood> {
                 ChestMaterials.addTrapped(material, ChestType.RIGHT,
                     chestFeature.registryId("entity/chest/" + name + "_trapped_right"));
                 }
-            }
-
-            for (var name : List.of("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped", "pale_oak", "azalea", "ebony")) {
-                feature().log().dev("[Q10] bookshelf model path: charmony:block/{}_bookshelf; texture: charmony:block/{}_bookshelf", name, name);
-                feature().log().dev("[Q10] chiseled bookshelf model path: charmony:block/{}_chiseled_bookshelf", name);
             }
 
             // Register models for custom boats.

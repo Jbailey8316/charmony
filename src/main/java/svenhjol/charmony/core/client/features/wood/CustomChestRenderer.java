@@ -2,7 +2,6 @@ package svenhjol.charmony.core.client.features.wood;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.mojang.logging.LogUtils;
 import net.minecraft.client.model.ChestModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.RenderType;
@@ -18,12 +17,8 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import svenhjol.charmony.core.common.features.wood.blocks.entity.CustomChestBlockEntity;
-import org.slf4j.Logger;
 
 public final class CustomChestRenderer<T extends CustomChestBlockEntity> implements BlockEntityRenderer<T, CustomChestRenderState> {
-    private static final Logger LOGGER = LogUtils.getLogger();
-    private static boolean diagnosticLogged;
-    private static boolean bindingDiagnosticLogged;
     private final MaterialSet materials;
     private final ChestModel singleModel;
     private final ChestModel doubleLeftModel;
@@ -36,7 +31,6 @@ public final class CustomChestRenderer<T extends CustomChestBlockEntity> impleme
         doubleLeftModel = new ChestModel(context.bakeLayer(ModelLayers.DOUBLE_CHEST_LEFT));
         doubleRightModel = new ChestModel(context.bakeLayer(ModelLayers.DOUBLE_CHEST_RIGHT));
         vanillaStateExtractor = new ChestRenderer<>(context);
-        LOGGER.info("[Charm Q10.3] CustomChestRenderer constructed blockEntityRenderer={}", getClass().getName());
     }
 
     @Override
@@ -50,20 +44,6 @@ public final class CustomChestRenderer<T extends CustomChestBlockEntity> impleme
                                    ModelFeatureRenderer.CrumblingOverlay breakProgress) {
         vanillaStateExtractor.extractRenderState(blockEntity, state, partialTick, cameraPosition, breakProgress);
         state.chestMaterial = ChestMaterials.get(blockEntity, state.type);
-        if (!diagnosticLogged) {
-            diagnosticLogged = true;
-            var texture = state.chestMaterial == null ? "<null>" : materialTexture(state.chestMaterial);
-            LOGGER.info("[Charm Q10.3] renderer extract blockEntityType={} type={} materialTexture={} block={}",
-                blockEntity.getType(), state.type, texture, blockEntity.getBlockState().getBlock());
-        }
-    }
-
-    private static String materialTexture(Material material) {
-        try {
-            return String.valueOf(Material.class.getMethod("texture").invoke(material));
-        } catch (ReflectiveOperationException e) {
-            return "<texture-api-unavailable>";
-        }
     }
 
     @Override
@@ -80,13 +60,6 @@ public final class CustomChestRenderer<T extends CustomChestBlockEntity> impleme
         open = 1.0f - open * open * open;
         var renderType = state.chestMaterial.renderType(RenderType::entityCutout);
         var sprite = materials.get(state.chestMaterial);
-        if (!bindingDiagnosticLogged) {
-            bindingDiagnosticLogged = true;
-            LOGGER.info("[Charm Q10.3] renderer submit type={} sprite={} renderType={} model={} material={}",
-                state.type, sprite, renderType, state.type == ChestType.LEFT ? "double_left"
-                    : state.type == ChestType.RIGHT ? "double_right" : "single",
-                materialTexture(state.chestMaterial));
-        }
         var model = state.type == ChestType.LEFT ? doubleLeftModel
             : state.type == ChestType.RIGHT ? doubleRightModel : singleModel;
 
