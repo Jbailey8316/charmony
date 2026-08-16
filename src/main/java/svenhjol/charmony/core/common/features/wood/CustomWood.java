@@ -19,6 +19,7 @@ public enum CustomWood {
     LOG,
     PLANKS,
     PRESSURE_PLATE,
+    SHELF,
     SAPLING,
     SIGN,
     SLAB,
@@ -35,7 +36,7 @@ public enum CustomWood {
     );
 
     public static final List<CustomWood> FUNCTIONAL_BLOCKS = List.of(
-        BARREL, BOOKSHELF, BUTTON, CHEST, CHISELED_BOOKSHELF,
+        BARREL, BOOKSHELF, BUTTON, CHEST, CHISELED_BOOKSHELF, SHELF,
         HANGING_SIGN, LADDER, SIGN, TRAPPED_CHEST
     );
 

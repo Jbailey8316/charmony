@@ -48,6 +48,7 @@ public interface WoodMaterial extends Material {
         map.put(CustomWood.LOG, () -> Items.ACACIA_BUTTON);
         map.put(CustomWood.PLANKS, () -> Items.ACACIA_BUTTON);
         map.put(CustomWood.PRESSURE_PLATE, () -> Items.ACACIA_BUTTON);
+        map.put(CustomWood.SHELF, () -> Items.OAK_SHELF);
         map.put(CustomWood.SAPLING, () -> Items.ACACIA_SAPLING);
         map.put(CustomWood.SIGN, () -> Items.ACACIA_HANGING_SIGN);
         map.put(CustomWood.SLAB, () -> Items.ACACIA_BUTTON);

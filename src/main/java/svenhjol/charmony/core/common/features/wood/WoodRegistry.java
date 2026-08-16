@@ -156,6 +156,10 @@ public final class WoodRegistry {
         return feature;
     }
 
+    public Shelf shelf(WoodMaterial material) {
+        return new Shelf(this, material);
+    }
+
     public Fence fence(WoodMaterial material) {
         return new Fence(this, material);
     }
