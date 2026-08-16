@@ -20,6 +20,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -181,6 +182,10 @@ public final class CommonRegistry {
 
     public <D> Registerable<DataComponentType<D>> dataComponent(String id, Supplier<UnaryOperator<DataComponentType.Builder<D>>> dataComponent) {
         return new Registerable<>(feature, () -> DataComponents.register(feature.registryId(id).toString(), dataComponent.get()));
+    }
+
+    public <D> Registerable<DataComponentType<D>> dataComponent(ResourceLocation id, Supplier<UnaryOperator<DataComponentType.Builder<D>>> dataComponent) {
+        return new Registerable<>(feature, () -> DataComponents.register(id.toString(), dataComponent.get()));
     }
 
     public <T extends TooltipProvider> Registerable<Void> dataComponentTooltipProvider(Supplier<DataComponentType<T>> dataComponentType) {
