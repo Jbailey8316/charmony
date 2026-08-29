@@ -4,6 +4,7 @@ import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.BoatRenderer;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -73,6 +74,11 @@ public class Registers extends Setup<Wood> {
 
                 clientRegistry.entityRenderer(boatEntity, context -> new BoatRenderer(context, boatLayer));
                 clientRegistry.entityRenderer(chestBoatEntity, context -> new BoatRenderer(context, chestBoatLayer));
+            }
+
+            // Custom ladders use the same cutout render layer as vanilla ladders.
+            for (var ladder : WoodRegistry.LADDERS) {
+                clientRegistry.blockRenderType(ladder.get().block.get(), ChunkSectionLayer.CUTOUT);
             }
 
             // Register the woodtype for custom signs.

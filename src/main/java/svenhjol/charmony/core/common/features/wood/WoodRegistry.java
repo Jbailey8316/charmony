@@ -41,6 +41,7 @@ public final class WoodRegistry {
     public static final List<Supplier<Sign>> SIGNS = new ArrayList<>();
     public static final List<Supplier<Chest>> CHESTS = new ArrayList<>();
     public static final List<Supplier<TrappedChest>> TRAPPED_CHESTS = new ArrayList<>();
+    public static final List<Supplier<Ladder>> LADDERS = new ArrayList<>();
     private static Registerable<BlockEntityType<CustomChestBlockEntity>> CHEST_BLOCK_ENTITY;
     private static Registerable<BlockEntityType<CustomTrappedChestBlockEntity>> TRAPPED_CHEST_BLOCK_ENTITY;
 
@@ -177,7 +178,9 @@ public final class WoodRegistry {
     }
 
     public Ladder ladder(WoodMaterial material) {
-        return new Ladder(this, material);
+        var ladder = new Ladder(this, material);
+        LADDERS.add(() -> ladder);
+        return ladder;
     }
 
     public Log log(WoodMaterial material) {
